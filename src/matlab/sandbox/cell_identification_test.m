@@ -3,7 +3,9 @@ clc; clear; close all;
 gaussianFilter = fspecial('gaussian', [10, 10], 10);
 
 initial_image = imread('../../../data/initial_examples/Best quality images/01 cell membrane.tif');
-equalized_image = histeq(initial_image);
+blurred_initial = imfilter(initial_image, gaussianFilter, 'symmetric', 'conv');
+
+equalized_image = histeq(blurred_initial);
 
 black_and_white = im2bw(equalized_image, graythresh(equalized_image));
 
@@ -17,7 +19,7 @@ filled_image = imfill(inverted_image,'holes');
 filled_image = imopen(filled_image, ones(5,5));
 
 % remove small connected components fewer than pixels
-min_num_pixels = 100;
+min_num_pixels = 900;
 cleaned_image = bwareaopen(filled_image, min_num_pixels);
 
 % obtain perimeters
