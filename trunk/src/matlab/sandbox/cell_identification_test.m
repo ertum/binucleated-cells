@@ -41,12 +41,12 @@ imshow(initial_image);
 title('initial image');
 
 subplot(2, 2, 2);
-imshow(black_and_white);
-title('thresholded');
-
-subplot(2, 2, 3);
 imshow(blurred);
 title('blurred');
+
+subplot(2, 2, 3);
+imshow(filled_image);
+title('filled');
 
 subplot(2, 2, 4);
 imshow(rgb_labels);
