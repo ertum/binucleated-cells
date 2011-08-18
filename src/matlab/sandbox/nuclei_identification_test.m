@@ -3,9 +3,9 @@ clc; clear; close all;
 gaussianFilter = fspecial('gaussian', [2, 2], 2);
 gaussianFilter2 = fspecial('gaussian', [10, 10], 10);
 
-combined_image = imread('../../../data/initial_examples/Best quality images/02 membrane and DNA, annotated.tif');
+combined_image = imread('../../../data/initial_examples/Best quality images/01 membrane and DNA, annotated.tif');
 
-initial_image = imread('../../../data/initial_examples/Best quality images/02 DNA.tif');
+initial_image = imread('../../../data/initial_examples/Best quality images/01 DNA.tif');
 blurred_initial = imfilter(initial_image, gaussianFilter, 'symmetric', 'conv');
 
 equalized_image = adapthisteq(blurred_initial);
@@ -50,8 +50,8 @@ imshow(equalized_image);
 title('equalized_image');
 
 subplot(2, 2, 3);
-imshow(blurred);
-title('blurred');
+imshow(cleaned_image);
+title('cleaned_image');
 
 subplot(2, 2, 4);
 imshow(rgb_labels);

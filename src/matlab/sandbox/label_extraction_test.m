@@ -3,14 +3,9 @@ clc; clear; close all;
 
 combined_image = imread('../../../data/initial_examples/Best quality images/01 membrane and DNA, annotated.tif');
 
-
 figure;
-imshow(combined_image(:, :, 2));
-title('Green Layer');
-
-figure;
-imshow(combined_image(:, :, 3));
-title('Blue Layer');
+imshow(combined_image);
+title('Original');
 
 %% Extract 1's
 
@@ -25,13 +20,16 @@ end
 ones_filter = imopen(ones_filter, strel('disk', 1));
 
 figure;
-
+imshow(ones_filter);
 title('Ones Extraction');
 
 connected_components = bwconncomp(ones_filter);
 labels = labelmatrix(connected_components);
 rgb_labels = label2rgb(labels);
-imshow(rgb_labels);
+
+connected_components = bwconncomp(ones_filter);
+ones_points = regionprops(connected_components, 'Centroid');
+ones_points = get_centroids(ones_points);
 
 %% Extract 2's
 
