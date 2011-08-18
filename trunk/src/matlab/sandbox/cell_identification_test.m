@@ -22,8 +22,12 @@ filled_image = imfill(inverted_image,'holes');
 filled_image = imopen(filled_image, strel('disk', 6));
 
 % remove small connected components fewer than pixels
-min_num_pixels = 900;
+min_num_pixels = 500;
 cleaned_image = bwareaopen(filled_image, min_num_pixels);
+
+max_num_pixels = 2 * (1e4);
+cleaned_image = bwareaclose(cleaned_image, max_num_pixels);
+
 
 % obtain perimeters
 perimeters = bwperim(cleaned_image);
@@ -31,7 +35,7 @@ perimeters = bwperim(cleaned_image);
 % overlay perimeters on original image
 overlayed = imoverlay(dna_image, perimeters, [1, 1, 1]);
 
-connected_components = bwconncomp(filled_image);
+connected_components = bwconncomp(cleaned_image);
 labels = labelmatrix(connected_components);
 
 rgb_labels = label2rgb(labels);
@@ -45,8 +49,8 @@ imshow(blurred);
 title('blurred');
 
 subplot(2, 2, 3);
-imshow(filled_image);
-title('filled');
+imshow(cleaned_image);
+title('cleaned');
 
 subplot(2, 2, 4);
 imshow(rgb_labels);
